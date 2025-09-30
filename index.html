@@ -10,22 +10,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Dark Mode (Default) */
+        /* Base styles are now for Light Mode */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #cbd5e1; /* slate-300 */
-            background-image: radial-gradient(circle at top right, rgba(14, 165, 233, 0.2), transparent 40%),
-                              radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.2), transparent 50%);
-            background-attachment: fixed;
+            background-color: #f1f5f9; /* slate-100 */
+            color: #1e293b; /* slate-800 */
+            background-image: none;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .glass-container {
-            background-color: rgba(30, 41, 59, 0.5); /* slate-800 with opacity */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.8); /* white with opacity */
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
@@ -70,54 +67,88 @@
             }
         }
         
-        /* Custom scrollbar for better aesthetics */
+        /* Custom scrollbar for light mode */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
 
-        /* Light Mode Styles */
-        body.light-mode {
-            background-color: #f1f5f9; /* slate-100 */
-            color: #1e293b; /* slate-800 */
-            background-image: none;
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #cbd5e1; /* slate-300 */
+            background-image: radial-gradient(circle at top right, rgba(14, 165, 233, 0.2), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.2), transparent 50%);
+            background-attachment: fixed;
         }
-        .light-mode .glass-container {
-            background-color: rgba(255, 255, 255, 0.8); /* white with opacity */
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        .dark-mode .glass-container {
+            background-color: rgba(30, 41, 59, 0.5); /* slate-800 with opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
         }
-        .light-mode .text-slate-300 { color: #1e293b; }
-        .light-mode .text-slate-400, .light-mode .text-slate-500 { color: #475569; }
-        .light-mode .border-slate-700 { border-color: #e2e8f0; }
-        .light-mode .bg-slate-800\/50 { background-color: #f8fafc; }
-        .light-mode .border-slate-600 { border-color: #cbd5e1; }
-        .light-mode .text-slate-100 { color: #0f172a; }
-        .light-mode #add-attempt-btn { background-color: #e0f2fe; color: #0c4a6e; border-color: #bae6fd; }
-        .light-mode #add-attempt-btn:hover { background-color: #bae6fd; }
-        .light-mode .bg-slate-700\/50 { background-color: #f1f5f9; }
-        .light-mode .points-span, .light-mode .text-sky-300, .light-mode .text-sky-400 { color: #0284c7; }
-        .light-mode .bg-red-500\/20 { background-color: #fee2e2; color: #b91c1c; }
-        .light-mode .bg-yellow-500\/20 { background-color: #fef9c3; color: #a16207; }
-        .light-mode .bg-slate-500\/20 { background-color: #e2e8f0; color: #475569; }
-        .light-mode .bg-green-500\/20 { background-color: #dcfce7; color: #166534; }
-        .light-mode .bg-cyan-500\/20 { background-color: #cffafe; color: #0e7490; }
-        .light-mode .bg-indigo-500\/10 { background-color: #e0e7ff; }
-        .light-mode .bg-sky-500\/10 { background-color: #e0f2fe; }
-        .light-mode .prose { color: #334155; }
-        .light-mode .prose-strong, .light-mode .prose-headings { color: #1e293b; }
-        .light-mode .bg-slate-900\/50 { background-color: #f8fafc; }
-        .light-mode h1.bg-clip-text { background-image: linear-gradient(to right, #38bdf8, #818cf8); }
-        .light-mode input::placeholder { color: #94a3b8; }
-        .light-mode select { color: #1e293b; }
-        .light-mode .delete-attempt-btn { color: #94a3b8; }
-        .light-mode .delete-attempt-btn:hover { color: #dc2626; }
-        .light-mode .file\:bg-sky-500\/20 { background-color: #e0f2fe; }
-        .light-mode .file\:text-sky-300 { color: #0c4a6e; }
-        .light-mode .hover\:file\:bg-sky-500\/30:hover { background-color: #bae6fd; }
-        .light-mode ::-webkit-scrollbar-track { background: #e2e8f0; }
-        .light-mode ::-webkit-scrollbar-thumb { background: #94a3b8; }
-        .light-mode ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        /* Text colors */
+        .dark-mode .text-slate-500,
+        .dark-mode .text-slate-600 { color: #94a3b8; } /* slate-400 */
+        .dark-mode .text-slate-700 { color: #cbd5e1; } /* slate-300 */
+        .dark-mode .text-slate-800 { color: #e2e8f0; } /* slate-200 */
+        .dark-mode .text-slate-900 { color: #f1f5f9; } /* slate-100 */
+        .dark-mode .text-sky-600 { color: #38bdf8; } /* sky-400 */
+        .dark-mode .text-sky-800 { color: #7dd3fc; } /* sky-300 */
+        .dark-mode .text-blue-600 { color: #60a5fa; } /* blue-400 */
+        
+        /* Backgrounds & Inputs */
+        .dark-mode .bg-slate-50, 
+        .dark-mode .bg-slate-100 { 
+            background-color: rgba(51, 65, 85, 0.5); /* slate-700/50 */
+        }
+        .dark-mode input, .dark-mode select {
+            background-color: rgba(30, 41, 59, 0.5);
+            color: #cbd5e1;
+        }
+        .dark-mode .bg-sky-100 { background-color: rgba(14, 165, 233, 0.2); }
+        .dark-mode .hover\:bg-sky-200:hover { background-color: rgba(14, 165, 233, 0.3); }
+        .dark-mode .bg-indigo-50 { background-color: rgba(99, 102, 241, 0.1); }
+        .dark-mode .bg-sky-50 { background-color: rgba(14, 165, 233, 0.1); }
+
+        /* Borders */
+        .dark-mode .border-slate-300 { border-color: #334155; } /* slate-700 */
+        .dark-mode input, .dark-mode select {
+            border-color: #475569; /* slate-600 */
+        }
+        .dark-mode .border-sky-200 { border-color: rgba(56, 189, 248, 0.3); }
+
+        /* Prose */
+        .dark-mode .prose { color: #94a3b8; }
+        .dark-mode .prose-strong { color: #f1f5f9; }
+        .dark-mode .prose-headings { color: #e2e8f0; }
+
+        /* Result Spans & Badges */
+        .dark-mode .bg-red-100 { background-color: rgba(239, 68, 68, 0.2); }
+        .dark-mode .text-red-800 { color: #f87171; }
+        .dark-mode .bg-yellow-100 { background-color: rgba(234, 179, 8, 0.2); }
+        .dark-mode .text-yellow-800 { color: #facc15; }
+        .dark-mode .bg-slate-200 { background-color: rgba(100, 116, 139, 0.2); }
+        .dark-mode .bg-green-100 { background-color: rgba(34, 197, 94, 0.2); }
+        .dark-mode .text-green-800 { color: #4ade80; }
+        .dark-mode .bg-gray-200 { background-color: rgba(100, 116, 139, 0.2); }
+        .dark-mode .text-gray-700 { color: #94a3b8; }
+
+        /* Placeholders */
+        .dark-mode input::placeholder { color: #64748b; }
+        
+        /* Icons & Buttons */
+        .dark-mode .delete-attempt-btn { color: #64748b; }
+        .dark-mode .delete-attempt-btn:hover { color: #ef4444; }
+
+        /* Scrollbar */
+        .dark-mode ::-webkit-scrollbar-track { background: #0f172a; }
+        .dark-mode ::-webkit-scrollbar-thumb { background: #334155; }
+        .dark-mode ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Other fixes */
+        .dark-mode h1.bg-clip-text { background-image: linear-gradient(to right, #38bdf8, #818cf8); }
 
         #theme-toggle {
             position: fixed;
@@ -127,7 +158,7 @@
         }
     </style>
 </head>
-<body class="text-slate-300">
+<body class="text-slate-800">
 
     <div id="theme-toggle" class="cursor-pointer p-2 rounded-full transition-colors hover:bg-slate-500/20">
         <!-- Sun Icon -->
@@ -138,37 +169,44 @@
 
     <div class="container mx-auto max-w-4xl p-4 sm:p-6 md:p-8">
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-sky-400 to-violet-500 text-transparent bg-clip-text">IPPT Training Plan Generator</h1>
-            <p class="mt-2 text-slate-400">Enter your details and past results to get a customized AI-powered training plan.</p>
+            <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-sky-500 to-violet-600 text-transparent bg-clip-text">IPPT Training Plan Generator</h1>
+            <p class="mt-2 text-slate-500">Enter your details and past results to get a customized AI-powered training plan.</p>
         </header>
 
         <main class="glass-container p-6 sm:p-8 rounded-2xl shadow-2xl space-y-8">
             <!-- Section 1: Officer's Details -->
             <section id="officer-details">
-                <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
-                    <h2 class="text-xl font-semibold text-slate-100">1. Officer's Details</h2>
-                    <button id="clear-all-btn" class="text-sm text-sky-400 hover:underline">Clear All</button>
+                <div class="flex justify-between items-center mb-4 border-b border-slate-300 pb-2">
+                    <h2 class="text-xl font-semibold text-slate-900">1. Officer's Details</h2>
+                    <button id="clear-all-btn" class="text-sm text-sky-600 hover:underline">Clear All</button>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-slate-300">Name</label>
-                        <input type="text" id="name" class="mt-1 block w-full rounded-md bg-slate-800/50 border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., John Doe">
+                        <label for="name" class="block text-sm font-medium text-slate-700">Name</label>
+                        <input type="text" id="name" class="mt-1 block w-full rounded-md bg-slate-50 border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2.5" placeholder="e.g., John Doe">
                     </div>
                     <div>
-                        <label for="age" class="block text-sm font-medium text-slate-300">Age</label>
-                        <input type="number" id="age" class="mt-1 block w-full rounded-md bg-slate-800/50 border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., 25">
-                        <p id="age-group-display" class="text-xs text-slate-400 mt-1">Age Group: --</p>
+                        <label for="age" class="block text-sm font-medium text-slate-700">Age</label>
+                        <input type="number" id="age" class="mt-1 block w-full rounded-md bg-slate-50 border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2.5" placeholder="e.g., 25">
+                        <p id="age-group-display" class="text-xs text-slate-500 mt-1">Age Group: --</p>
                     </div>
                     <div class="md:col-span-2">
-                        <label for="gender" class="block text-sm font-medium text-slate-300">Gender</label>
-                        <select id="gender" class="mt-1 block w-full rounded-md bg-slate-800/50 border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        <label for="gender" class="block text-sm font-medium text-slate-700">Gender</label>
+                        <select id="gender" class="mt-1 block w-full rounded-md bg-slate-50 border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2.5">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
                     </div>
                     <div class="md:col-span-2">
-                         <label for="target-goal" class="block text-sm font-medium text-slate-300">Target Goal</label>
-                         <select id="target-goal" class="mt-1 block w-full rounded-md bg-slate-800/50 border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        <label for="work-cycle" class="block text-sm font-medium text-slate-700">Work Cycle</label>
+                        <select id="work-cycle" class="mt-1 block w-full rounded-md bg-slate-50 border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2.5">
+                            <option value="GRF Officer">GRF Officer</option>
+                            <option value="Office Hours">Office Hours</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                         <label for="target-goal" class="block text-sm font-medium text-slate-700">Target Goal</label>
+                         <select id="target-goal" class="mt-1 block w-full rounded-md bg-slate-50 border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2.5">
                             <option value="" disabled selected>Select a target award</option>
                             <option value="Pass">Pass</option>
                             <option value="Silver">Silver</option>
@@ -176,24 +214,23 @@
                         </select>
                     </div>
                     <div class="md:col-span-2">
-                         <label for="medical-fitness" class="block text-sm font-medium text-slate-300">Medical Fitness Status / PES</label>
-                         <input type="text" id="medical-fitness" class="mt-1 block w-full rounded-md bg-slate-800/50 border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" value="None">
+                         <label for="medical-fitness" class="block text-sm font-medium text-slate-700">Medical Fitness Status</label>
+                         <input type="text" id="medical-fitness" class="mt-1 block w-full rounded-md bg-slate-50 border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2.5" value="None">
                     </div>
                 </div>
             </section>
 
             <!-- Section 2: IPPT Attempts -->
             <section id="ippt-attempts">
-                <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
-                    <h2 class="text-xl font-semibold text-slate-100">2. IPPT Attempts</h2>
+                <div class="flex justify-between items-center mb-4 border-b border-slate-300 pb-2">
+                    <h2 class="text-xl font-semibold text-slate-900">2. IPPT Attempts</h2>
                 </div>
                 <div id="attempts-container" class="space-y-4">
                     <!-- Dynamic attempt rows will be injected here -->
                 </div>
-                 <p id="no-attempts-msg" class="text-center text-slate-400 p-4 border-2 border-dashed border-slate-600 rounded-lg mt-4">Click the button below to add an IPPT attempt.</p>
             
                 <div class="mt-4">
-                    <button id="add-attempt-btn" class="w-full flex items-center justify-center gap-2 bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 font-semibold py-2 px-4 rounded-lg transition-colors duration-200 ease-in-out border border-sky-500/30">
+                    <button id="add-attempt-btn" class="w-full flex items-center justify-center gap-2 bg-sky-100 hover:bg-sky-200 text-sky-800 font-semibold py-2 px-4 rounded-lg transition-colors duration-200 ease-in-out border border-sky-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                           <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                         </svg>
@@ -212,16 +249,16 @@
                             Export to Excel
                         </button>
                     </div>
-                    <div id="weakness-output" class="mt-4 text-left p-4 bg-indigo-500/10 rounded-lg min-h-[50px]"></div>
+                    <div id="weakness-output" class="mt-4 text-left p-4 bg-indigo-50 rounded-lg min-h-[50px]"></div>
                 </div>
             </section>
 
             <!-- Section 3: Generate Plan -->
             <section id="generate-section" class="pt-4 text-center">
                  <div class="mb-6 text-left">
-                    <label for="api-key" class="block text-sm font-medium text-slate-300">Google AI API Key</label>
-                    <input type="password" id="api-key" class="mt-1 block w-full rounded-md bg-slate-800/50 border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Enter your API key here">
-                    <p class="mt-1 text-xs text-slate-500">You need a free key to generate the plan. Get yours from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-400 hover:underline">Google AI Studio</a>.</p>
+                    <label for="api-key" class="block text-sm font-medium text-slate-700">Google AI API Key</label>
+                    <input type="password" id="api-key" class="mt-1 block w-full rounded-md bg-slate-50 border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2.5" placeholder="Enter your API key here">
+                    <p class="mt-1 text-xs text-slate-500">You need a free key to generate the plan. Get yours from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 hover:underline">Google AI Studio</a>.</p>
                 </div>
                 <button id="generate-plan-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 w-full md:w-auto">
                     Generate Training Plan
@@ -231,15 +268,15 @@
             
             <!-- Section 4: Output -->
             <section id="output-section" class="hidden">
-                 <h2 class="text-xl font-semibold text-slate-100 mb-4 border-b border-slate-700 pb-2">Your Personalised Training Plan</h2>
-                 <div id="plan-output" class="prose max-w-none prose-slate mt-4 p-4 bg-slate-900/50 rounded-lg text-slate-300 prose-strong:text-slate-100 prose-headings:text-slate-200">
+                 <h2 class="text-xl font-semibold text-slate-900 mb-4 border-b border-slate-300 pb-2">Your Personalised Training Plan</h2>
+                 <div id="plan-output" class="prose max-w-none prose-slate mt-4 p-4 bg-slate-50 rounded-lg text-slate-700 prose-strong:text-slate-900 prose-headings:text-slate-800">
                      <!-- AI generated plan will be displayed here -->
                  </div>
                  <div id="dietary-section" class="mt-6 text-center">
                      <button id="dietary-btn" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-200">
                         ✨ Get Dietary Tips
                     </button>
-                    <div id="dietary-output" class="mt-4 text-left p-4 bg-sky-500/10 rounded-lg min-h-[50px] hidden"></div>
+                    <div id="dietary-output" class="mt-4 text-left p-4 bg-sky-50 rounded-lg min-h-[50px] hidden"></div>
                  </div>
             </section>
         </main>
@@ -254,6 +291,7 @@
         const nameEl = document.getElementById('name');
         const ageEl = document.getElementById('age');
         const genderEl = document.getElementById('gender');
+        const workCycleEl = document.getElementById('work-cycle');
         const medicalFitnessEl = document.getElementById('medical-fitness');
         const addAttemptBtn = document.getElementById('add-attempt-btn');
         const attemptsContainer = document.getElementById('attempts-container');
@@ -261,7 +299,6 @@
         const generationStatusEl = document.getElementById('generation-status');
         const outputSectionEl = document.getElementById('output-section');
         const planOutputEl = document.getElementById('plan-output');
-        const noAttemptsMsg = document.getElementById('no-attempts-msg');
         const apiKeyEl = document.getElementById('api-key');
         const clearAllBtn = document.getElementById('clear-all-btn');
         const weaknessAnalysisSection = document.getElementById('weakness-analysis-section');
@@ -352,7 +389,7 @@
         
         function calculateIpptResult(pushups, situps, runTime, age, gender) {
              if (!age || age <= 0) {
-                 return { award: "Enter Age", awardClass: "bg-gray-500/20 text-gray-300", totalPoints: 0, pushupPoints: 0, situpPoints: 0, runPoints: 0 };
+                 return { award: "Enter Age", awardClass: "bg-gray-200 text-gray-700", totalPoints: 0, pushupPoints: 0, situpPoints: 0, runPoints: 0 };
             }
             
             const [minutes, seconds] = runTime.split(':').map(Number);
@@ -366,11 +403,11 @@
             
             let passThreshold = 61, silverThreshold = 75, goldThreshold = 85;
             
-            let award = "Fail", awardClass = "bg-red-500/20 text-red-300";
+            let award = "Fail", awardClass = "bg-red-100 text-red-800";
             if(pushupPoints >= 1 && situps >= 1 && runPoints >= 1 && totalPoints >= 51) { // Base pass requirement
-                if (totalPoints >= goldThreshold) { award = "Gold"; awardClass = "bg-yellow-500/20 text-yellow-300"; } 
-                else if (totalPoints >= silverThreshold) { award = "Silver"; awardClass = "bg-slate-500/20 text-slate-300"; } 
-                else if (totalPoints >= passThreshold) { award = "Pass"; awardClass = "bg-green-500/20 text-green-300"; }
+                if (totalPoints >= goldThreshold) { award = "Gold"; awardClass = "bg-yellow-100 text-yellow-800"; } 
+                else if (totalPoints >= silverThreshold) { award = "Silver"; awardClass = "bg-slate-200 text-slate-800"; } 
+                else if (totalPoints >= passThreshold) { award = "Pass"; awardClass = "bg-green-100 text-green-800"; }
             }
             
             return { award, awardClass, totalPoints, pushupPoints, situpPoints, runPoints };
@@ -378,30 +415,30 @@
 
         function createAttemptRow(id) {
             const attemptDiv = document.createElement('div');
-            attemptDiv.className = 'attempt-row grid grid-cols-1 md:grid-cols-10 gap-4 items-start bg-slate-700/50 p-3 rounded-lg';
+            attemptDiv.className = 'attempt-row grid grid-cols-1 md:grid-cols-10 gap-4 items-start bg-slate-100 p-3 rounded-lg';
             attemptDiv.dataset.id = id;
             attemptDiv.innerHTML = `
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-slate-400">Push-ups</label>
-                    <input type="number" class="mt-1 pushups-input w-full rounded-md bg-slate-800/50 border-slate-600 shadow-sm text-sm" placeholder="Reps">
-                    <span class="text-xs text-sky-400 points-span pushup-points">Points: --</span>
+                    <label class="block text-sm font-medium text-slate-600">Push-ups</label>
+                    <input type="number" class="mt-1 pushups-input w-full rounded-md bg-white border-slate-300 shadow-sm text-sm p-2.5" placeholder="Reps">
+                    <span class="text-xs text-sky-600 points-span pushup-points">Points: --</span>
                 </div>
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-slate-400">Sit-ups</label>
-                    <input type="number" class="mt-1 situps-input w-full rounded-md bg-slate-800/50 border-slate-600 shadow-sm text-sm" placeholder="Reps">
-                    <span class="text-xs text-sky-400 points-span situp-points">Points: --</span>
+                    <label class="block text-sm font-medium text-slate-600">Sit-ups</label>
+                    <input type="number" class="mt-1 situps-input w-full rounded-md bg-white border-slate-300 shadow-sm text-sm p-2.5" placeholder="Reps">
+                    <span class="text-xs text-sky-600 points-span situp-points">Points: --</span>
                 </div>
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-slate-400">2.4km Run</label>
-                    <input type="text" class="mt-1 run-input w-full rounded-md bg-slate-800/50 border-slate-600 shadow-sm text-sm" placeholder="mm:ss">
-                    <span class="text-xs text-sky-400 points-span run-points">Points: --</span>
+                    <label class="block text-sm font-medium text-slate-600">2.4km Run</label>
+                    <input type="text" class="mt-1 run-input w-full rounded-md bg-white border-slate-300 shadow-sm text-sm p-2.5" placeholder="mm:ss">
+                    <span class="text-xs text-sky-600 points-span run-points">Points: --</span>
                 </div>
                 <div class="md:col-span-3 flex flex-col items-center justify-center text-center h-full pt-4 md:pt-0">
                     <span class="block text-xs font-medium text-slate-500 mb-1">Result</span>
                     <span class="result-span inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-semibold">---</span>
                 </div>
                 <div class="md:col-span-1 flex items-center justify-center h-full">
-                    <button class="delete-attempt-btn text-slate-500 hover:text-red-500 transition-colors p-2 rounded-full mt-4">
+                    <button class="delete-attempt-btn text-slate-400 hover:text-red-600 transition-colors p-2 rounded-full mt-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                           <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
                         </svg>
@@ -415,7 +452,6 @@
             deleteBtn.addEventListener('click', () => {
                 attemptDiv.remove();
                 if (attemptsContainer.children.length === 0) {
-                    noAttemptsMsg.classList.remove('hidden');
                     weaknessAnalysisSection.classList.add('hidden');
                 }
             });
@@ -443,7 +479,7 @@
 
             if (!age || age <= 0) {
                 resultSpan.textContent = `Enter Age`;
-                resultSpan.className = `result-span inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-semibold bg-gray-500/20 text-gray-300`;
+                resultSpan.className = `result-span inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700`;
                 resetPoints();
                 return;
             }
@@ -468,7 +504,7 @@
             const apiKey = apiKeyEl.value;
             if (!apiKey) {
                 const target = buttonEl.id === 'generate-plan-btn' ? generationStatusEl : outputEl;
-                target.innerHTML = `<span class="text-red-400 font-semibold">Please enter your Google AI API Key to proceed.</span>`;
+                target.innerHTML = `<span class="text-red-500 font-semibold">Please enter your Google AI API Key to proceed.</span>`;
                 apiKeyEl.focus();
                 return null;
             }
@@ -482,7 +518,7 @@
             if (loadingMessages.length > 0) {
                 let messageIndex = 0;
                 const updateMessage = () => {
-                    outputEl.innerHTML = `<div class="flex flex-col justify-center items-center"><div class="loader"></div><p class="mt-2 text-sky-300">${loadingMessages[messageIndex]}</p></div>`;
+                    outputEl.innerHTML = `<div class="flex flex-col justify-center items-center"><div class="loader"></div><p class="mt-2 text-sky-600">${loadingMessages[messageIndex]}</p></div>`;
                     messageIndex = (messageIndex + 1) % loadingMessages.length;
                 };
                 updateMessage();
@@ -514,7 +550,7 @@
 
             } catch (error) {
                 console.error("Gemini API Error:", error);
-                outputEl.innerHTML = `<span class="text-red-400 font-semibold">Error: ${error.message}</span>`;
+                outputEl.innerHTML = `<span class="text-red-500 font-semibold">Error: ${error.message}</span>`;
                 return null;
             } finally {
                 if(messageInterval) clearInterval(messageInterval);
@@ -531,6 +567,7 @@
                 name: nameEl.value,
                 age: ageEl.value,
                 gender: genderEl.value,
+                workCycle: workCycleEl.value,
                 medicalStatus: medicalFitnessEl.value,
                 targetGoal: targetGoalEl.value,
                 attempts: []
@@ -601,11 +638,11 @@
 
         async function generatePlan() {
             if (!nameEl.value || !ageEl.value || !medicalFitnessEl.value || !targetGoalEl.value || attemptsContainer.children.length === 0) {
-                generationStatusEl.innerHTML = `<span class="text-red-400 font-semibold">Please fill in all details including Name, Age, Target Goal, Medical Status, and add at least one IPPT attempt.</span>`;
+                generationStatusEl.innerHTML = `<span class="text-red-500 font-semibold">Please fill in all details including Name, Age, Target Goal, Medical Status, and add at least one IPPT attempt.</span>`;
                 return;
             }
              if (parseInt(ageEl.value) <=0) {
-                generationStatusEl.innerHTML = `<span class="text-red-400 font-semibold">Please enter a valid age.</span>`;
+                generationStatusEl.innerHTML = `<span class="text-red-500 font-semibold">Please enter a valid age.</span>`;
                 return;
             }
             
@@ -616,7 +653,9 @@
             let prompt = `You are a super motivating and friendly fitness buddy! 💪 Your goal is to create a simple and fun 4-week IPPT training plan for an officer. Use simple language and lots of encouraging emoticons (like 👍, 🎉, 🔥). Make the plan easy to understand and follow.
                 
                 Officer's Details:
-                - Name: ${officerData.name}, Age: ${officerData.age}, Gender: ${officerData.gender}, Medical Status: ${officerData.medicalStatus}
+                - Name: ${officerData.name}, Age: ${officerData.age}, Gender: ${officerData.gender}
+                - Work Cycle: ${officerData.workCycle}. This is very important. For 'GRF Officer', their schedule is a 4-day cycle: Morning shift (8am-7:30pm), Night shift (7:30pm-8am), Off-day, Off-day. For 'Office Hours', they work Monday to Friday 9am-6pm. The training plan MUST be tailored to this work schedule realistically.
+                - Medical Status: ${officerData.medicalStatus}
                 - TARGET GOAL: Achieve IPPT ${officerData.targetGoal}
                 
                 Past IPPT Attempts:
@@ -625,7 +664,7 @@
                 Your response must be a detailed, encouraging, and actionable 4-week plan focused on bridging the gap from their current results to their ${officerData.targetGoal} target. Include:
                 1. A brief, encouraging opening statement acknowledging their goal.
                 2. An analysis of their weakest stations in the context of their goal.
-                3. A week-by-week schedule (Week 1-4) with specific, progressively challenging exercises (sets, reps, distances) and 2-3 rest days per week.
+                3. A week-by-week schedule (Week 1-4) with specific, progressively challenging exercises (sets, reps, distances) and 2-3 rest days per week, planned around their specific work cycle.
                 4. Tips on proper form.
                 5. If medical status indicates limitations (e.g., 'excused running'), suggest alternatives.
                 6. Format using Markdown (headings, bold, bullets).`;
@@ -642,7 +681,7 @@
             if(planText) {
                 planOutputEl.innerHTML = simpleMarkdownToHtml(planText);
                 outputSectionEl.classList.remove('hidden');
-                generationStatusEl.innerHTML = '<span class="text-green-400 font-semibold">Your plan is ready! ✅</span>';
+                generationStatusEl.innerHTML = '<span class="text-green-500 font-semibold">Your plan is ready! ✅</span>';
             }
         }
         
@@ -661,7 +700,7 @@
         
         // --- UI and Event Listeners ---
         function simpleMarkdownToHtml(md) {
-            return md.replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mt-4 mb-2">$1</h3>').replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-6 mb-3 border-b pb-1 border-slate-700">$1</h2>').replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-8 mb-4">$1</h1>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/^\s*-\s(.*$)/gim, '<li class="ml-4">$1</li>').replace(/<\/li>\n<li/g, '</li><li').replace(/(<li.*?>[\s\S]*?<\/li>)/g, '<ul>$1</ul>').replace(/<\/ul>\s*<ul>/g, '').replace(/\n/g, '<br>');
+            return md.replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mt-4 mb-2">$1</h3>').replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-6 mb-3 border-b pb-1 border-slate-300">$1</h2>').replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-8 mb-4">$1</h1>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/^\s*-\s(.*$)/gim, '<li class="ml-4">$1</li>').replace(/<\/li>\n<li/g, '</li><li').replace(/(<li.*?>[\s\S]*?<\/li>)/g, '<ul>$1</ul>').replace(/<\/ul>\s*<ul>/g, '').replace(/\n/g, '<br>');
         }
         
         const fullRecalculateTrigger = () => {
@@ -682,7 +721,6 @@
             attemptCount++;
             const newRow = createAttemptRow(attemptCount);
             attemptsContainer.appendChild(newRow);
-            noAttemptsMsg.classList.add('hidden');
             weaknessAnalysisSection.classList.remove('hidden');
             addAttemptBtnText.textContent = 'Add Another Attempt';
         });
@@ -691,12 +729,12 @@
             nameEl.value = '';
             ageEl.value = '';
             genderEl.value = 'male';
+            workCycleEl.value = 'GRF Officer';
             medicalFitnessEl.value = 'None';
             targetGoalEl.value = '';
             
             attemptsContainer.innerHTML = '';
             attemptCount = 0;
-            noAttemptsMsg.classList.remove('hidden');
             outputSectionEl.classList.add('hidden');
             weaknessAnalysisSection.classList.add('hidden');
             weaknessOutput.innerHTML = '';
@@ -713,22 +751,22 @@
         
         // --- Theme Toggle Logic ---
         const applyTheme = (theme) => {
-            if (theme === 'light') {
-                document.body.classList.add('light-mode');
-                darkIcon.classList.remove('hidden');
-                lightIcon.classList.add('hidden');
-            } else {
-                document.body.classList.remove('light-mode');
-                darkIcon.classList.add('hidden');
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
                 lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            } else {
+                document.body.classList.remove('dark-mode');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
             }
         };
 
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const savedTheme = localStorage.getItem('theme') || 'light'; // Changed default to 'light'
         applyTheme(savedTheme);
 
         themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+            const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             localStorage.setItem('theme', newTheme);
             applyTheme(newTheme);
