@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="url(#g)"/>
+  <!-- running man simplified icon -->
+  <g transform="translate(0,0)" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- head -->
+    <circle cx="24" cy="18" r="4" fill="#fff"/>
+    <!-- body and arms -->
+    <path d="M24 22 L24 30" stroke="#fff"/>
+    <path d="M24 24 L18 28" stroke="#fff"/>
+    <!-- legs running -->
+    <path d="M24 30 L30 38" stroke="#fff"/>
+    <path d="M24 30 L18 40" stroke="#fff"/>
+    <!-- motion arm forward -->
+    <path d="M24 26 L30 24" stroke="#fff"/>
+  </g>
+</svg>
