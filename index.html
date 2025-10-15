@@ -30,31 +30,134 @@
             position: relative;
             width: 50px;
             height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader::before, .loader::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            animation: bubble 2.5s infinite ease-in-out;
+            filter: blur(5px);
+        }
+
+        .loader::before {
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(45deg, #38bdf8, #818cf8);
+        }
+
+        .loader::after {
+            width: 70%;
+            height: 70%;
+            background-image: linear-gradient(-45deg, #a78bfa, #c084fc);
+            animation-delay: -0.6s;
+        }
+
+        @keyframes bubble {
+            0%, 100% {
+                transform: scale(0.7);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+        
+        /* Custom scrollbar for light mode */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #cbd5e1; /* slate-300 */
+            background-image: radial-gradient(circle at top right, rgba(14, 165, 233, 0.2), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.2), transparent 50%);
+            background-attachment: fixed;
+        }
+        .dark-mode .glass-container {
+            background-color: rgba(30, 41, 59, 0.5); /* slate-800 with opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+        /* Text colors */
+        .dark-mode .text-slate-500,
+        .dark-mode .text-slate-600 { color: #94a3b8; } /* slate-400 */
+        .dark-mode .text-slate-700 { color: #cbd5e1; } /* slate-300 */
+        .dark-mode .text-slate-800 { color: #e2e8f0; } /* slate-200 */
+        .dark-mode .text-slate-900 { color: #f1f5f9; } /* slate-100 */
+        .dark-mode .text-sky-600 { color: #38bdf8; } /* sky-400 */
+        .dark-mode .text-sky-800 { color: #7dd3fc; } /* sky-300 */
+        .dark-mode .text-blue-600 { color: #60a5fa; } /* blue-400 */
+        
+        /* Backgrounds & Inputs */
+        .dark-mode .bg-slate-50, 
+        .dark-mode .bg-slate-100 { 
+            background-color: rgba(51, 65, 85, 0.5); /* slate-700/50 */
+        }
+        .dark-mode input, .dark-mode select {
+            background-color: rgba(30, 41, 59, 0.5);
+            color: #cbd5e1;
+        }
+        .dark-mode .bg-sky-100 { background-color: rgba(14, 165, 233, 0.2); }
+        .dark-mode .hover\:bg-sky-200:hover { background-color: rgba(14, 165, 233, 0.3); }
+        .dark-mode .bg-indigo-50 { background-color: rgba(99, 102, 241, 0.1); }
+        .dark-mode .bg-sky-50 { background-color: rgba(14, 165, 233, 0.1); }
+
+        /* Borders */
+        .dark-mode .border-slate-300 { border-color: #334155; } /* slate-700 */
+        .dark-mode input, .dark-mode select {
+            border-color: #475569; /* slate-600 */
+        }
+        .dark-mode .border-sky-200 { border-color: rgba(56, 189, 248, 0.3); }
+
+        /* Prose */
+        .dark-mode .prose { color: #94a3b8; }
+        .dark-mode .prose-strong { color: #f1f5f9; }
+        .dark-mode .prose-headings { color: #e2e8f0; }
+
+        /* Result Spans & Badges */
+        .dark-mode .bg-red-100 { background-color: rgba(239, 68, 68, 0.2); }
+        .dark-mode .text-red-800 { color: #f87171; }
+        .dark-mode .bg-yellow-100 { background-color: rgba(234, 179, 8, 0.2); }
+        .dark-mode .text-yellow-800 { color: #facc15; }
+        .dark-mode .bg-slate-200 { background-color: rgba(100, 116, 139, 0.2); }
+        .dark-mode .bg-green-100 { background-color: rgba(34, 197, 94, 0.2); }
+        .dark-mode .text-green-800 { color: #4ade80; }
+        .dark-mode .bg-gray-200 { background-color: rgba(100, 116, 139, 0.2); }
+        .dark-mode .text-gray-700 { color: #94a3b8; }
+
+        /* Placeholders */
+        .dark-mode input::placeholder { color: #64748b; }
+        
+        /* Icons & Buttons */
+        .dark-mode .delete-attempt-btn { color: #64748b; }
+        .dark-mode .delete-attempt-btn:hover { color: #ef4444; }
+
+        /* Scrollbar */
+        .dark-mode ::-webkit-scrollbar-track { background: #0f172a; }
+        .dark-mode ::-webkit-scrollbar-thumb { background: #334155; }
+        .dark-mode ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Other fixes */
+        .dark-mode h1.bg-clip-text { background-image: linear-gradient(to right, #38bdf8, #818cf8); }
+
+        #theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 50;
         }
     </style>
 </head>
-
-            /* Dark mode styles applied when <body> has .dark-mode */
-            body.dark-mode {
-                background-color: #0b1220; /* near black/indigo */
-                color: #e6eef8; /* light text */
-            }
-
-            body.dark-mode .glass-container {
-                background-color: rgba(6, 10, 21, 0.7);
-                border: 1px solid rgba(255, 255, 255, 0.04);
-                box-shadow: 0 6px 18px rgba(2,6,23,0.6);
-            }
-
-            /* Make result badges invert nicely */
-            body.dark-mode .result-span { background-color: rgba(255,255,255,0.06); color: #e6eef8; }
-            body.dark-mode .points-span { color: #cfe7ff; }
-
-            /* Button dark variants (when relying on bg colors) */
-            body.dark-mode .bg-sky-100 { background-color: rgba(56, 189, 248, 0.08); }
-            body.dark-mode .bg-indigo-600 { background-color: #3730a3; }
-            body.dark-mode .bg-teal-600 { background-color: #0f766e; }
-
 <body class="text-slate-800">
 
     <div id="theme-toggle" class="cursor-pointer p-2 rounded-full transition-colors hover:bg-slate-500/20">
@@ -183,6 +286,500 @@
         </footer>
     </div>
 
+    <script>
+        // DOM Elements
+        const nameEl = document.getElementById('name');
+        const ageEl = document.getElementById('age');
+        const genderEl = document.getElementById('gender');
+        const workCycleEl = document.getElementById('work-cycle');
+        const medicalFitnessEl = document.getElementById('medical-fitness');
+        const addAttemptBtn = document.getElementById('add-attempt-btn');
+        const attemptsContainer = document.getElementById('attempts-container');
+        const generatePlanBtn = document.getElementById('generate-plan-btn');
+        const generationStatusEl = document.getElementById('generation-status');
+        const outputSectionEl = document.getElementById('output-section');
+        const planOutputEl = document.getElementById('plan-output');
+        const apiKeyEl = document.getElementById('api-key');
+        const clearAllBtn = document.getElementById('clear-all-btn');
+        const weaknessAnalysisSection = document.getElementById('weakness-analysis-section');
+        const analyzeWeaknessBtn = document.getElementById('analyze-weakness-btn');
+        const weaknessOutput = document.getElementById('weakness-output');
+        const dietaryBtn = document.getElementById('dietary-btn');
+        const dietaryOutput = document.getElementById('dietary-output');
+        const addAttemptBtnText = document.getElementById('add-attempt-btn-text');
+        const exportExcelBtn = document.getElementById('export-excel-btn');
+        const targetGoalEl = document.getElementById('target-goal');
+        const ageGroupDisplayEl = document.getElementById('age-group-display');
+        const themeToggle = document.getElementById('theme-toggle');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        
+        // --- IPPT SCORING ENGINE (ACCURATE AS PER OFFICIAL CHARTS) ---
+        const CHARTS = {
+            male: {
+                // Data transcribed from user-provided 'Men-pushup-score.xlsx'
+                pushups: {"1":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"2":[0,0,0,0,0,0,0,0,0,0,0,0,0,1],"3":[0,0,0,0,0,0,0,0,0,0,0,0,1,2],"4":[0,0,0,0,0,0,0,0,0,0,0,1,2,4],"5":[0,0,0,0,0,0,0,0,0,0,1,2,4,6],"6":[0,0,0,0,0,0,0,0,0,1,2,4,6,8],"7":[0,0,0,0,0,0,0,0,1,2,4,6,8,9],"8":[0,0,0,0,0,0,0,1,2,4,6,8,9,10],"9":[0,0,0,0,0,0,1,2,4,6,8,9,10,11],"10":[0,0,0,0,0,1,2,4,6,8,9,10,11,12],"11":[0,0,0,0,1,2,4,6,8,9,10,11,12,13],"12":[0,0,0,1,2,4,6,8,9,10,11,12,13,14],"13":[0,0,1,2,4,6,8,9,10,11,12,13,14,15],"14":[0,1,2,4,6,8,9,10,11,12,13,14,15,15],"15":[1,2,4,6,8,9,10,11,12,13,14,15,15,16],"16":[2,4,6,8,9,10,11,12,13,14,15,15,16,16],"17":[4,6,8,9,10,11,12,13,14,15,15,16,16,16],"18":[6,8,9,10,11,12,13,14,15,15,16,16,16,17],"19":[8,9,10,11,12,13,14,15,15,16,16,16,17,17],"20":[9,10,11,12,13,14,15,15,16,16,16,17,17,17],"21":[10,11,12,13,14,15,15,16,16,16,17,17,17,18],"22":[11,12,13,14,15,15,16,16,16,17,17,17,18,18],"23":[12,13,14,15,15,16,16,16,17,17,17,18,18,18],"24":[13,14,15,15,16,16,16,17,17,17,18,18,18,19],"25":[14,15,15,16,16,16,17,17,17,18,18,18,19,19],"26":[15,15,16,16,16,17,17,17,18,18,18,19,19,19],"27":[15,16,16,16,17,17,17,18,18,18,19,19,19,20],"28":[16,16,16,17,17,17,18,18,18,19,19,19,20,20],"29":[16,16,17,17,17,18,18,18,19,19,19,20,20,21],"30":[16,17,17,17,18,18,18,19,19,19,20,20,21,21],"31":[17,17,17,18,18,18,19,19,19,20,20,20,21,22],"32":[17,17,18,18,18,19,19,19,20,20,20,21,21,22],"33":[17,18,18,18,19,19,19,20,20,20,21,21,22,22],"34":[18,18,18,19,19,19,20,20,20,21,21,21,22,23],"35":[18,18,19,19,19,20,20,20,21,21,21,22,22,23],"36":[18,19,19,19,20,20,20,20,21,21,22,22,23,23],"37":[19,19,19,20,20,20,20,21,21,22,22,22,23,24],"38":[19,19,20,20,20,20,21,21,21,22,22,23,23,24],"39":[19,20,20,20,20,21,21,21,22,22,23,23,24,24],"40":[20,20,20,20,21,21,21,21,22,22,23,23,24,25],"41":[20,20,20,21,21,21,21,22,22,23,23,24,24,25],"42":[20,20,21,21,21,21,22,22,22,23,23,24,25,25],"43":[20,21,21,21,21,22,22,22,23,23,24,24,25,25],"44":[21,21,21,21,22,22,22,22,23,23,24,24,25,25],"45":[21,21,21,22,22,22,22,23,23,24,24,25,25,25],"46":[21,21,22,22,22,22,23,23,23,24,24,25,25,25],"47":[21,22,22,22,22,23,23,23,24,24,25,25,25,25],"48":[22,22,22,22,23,23,23,23,24,24,25,25,25,25],"49":[22,22,22,23,23,23,23,24,24,25,25,25,25,25],"50":[22,22,23,23,23,23,24,24,24,25,25,25,25,25],"51":[22,23,23,23,23,24,24,24,25,25,25,25,25,25],"52":[23,23,23,23,24,24,24,24,25,25,25,25,25,25],"53":[23,23,23,24,24,24,24,25,25,25,25,25,25,25],"54":[23,23,24,24,24,24,25,25,25,25,25,25,25,25],"55":[23,24,24,24,24,25,25,25,25,25,25,25,25,25],"56":[24,24,24,24,25,25,25,25,25,25,25,25,25,25],"57":[24,24,24,25,25,25,25,25,25,25,25,25,25,25],"58":[24,24,25,25,25,25,25,25,25,25,25,25,25,25],"59":[24,25,25,25,25,25,25,25,25,25,25,25,25,25],"60":[25,25,25,25,25,25,25,25,25,25,25,25,25,25]},
 
+                
+                situps: {"1":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"2":[0,0,0,0,0,0,0,0,0,0,0,0,0,1],"3":[0,0,0,0,0,0,0,0,0,0,0,0,1,2],"4":[0,0,0,0,0,0,0,0,0,0,0,1,2,3],"5":[0,0,0,0,0,0,0,0,0,0,1,2,3,4],"6":[0,0,0,0,0,0,0,0,0,1,2,3,4,5],"7":[0,0,0,0,0,0,0,0,1,2,3,4,5,6],"8":[0,0,0,0,0,0,0,1,2,3,4,5,6,6],"9":[0,0,0,0,0,0,1,2,3,4,5,6,6,7],"10":[0,0,0,0,0,1,2,3,4,5,6,6,7,7],"11":[0,0,0,0,1,2,3,4,5,6,6,7,7,8],"12":[0,0,0,1,2,3,4,5,6,6,7,7,8,9],"13":[0,0,1,2,3,4,5,6,6,7,7,8,9,10],"14":[0,1,2,3,4,5,6,6,7,7,8,9,10,11],"15":[1,2,3,4,5,6,6,7,7,8,9,10,11,12],"16":[2,3,4,5,6,6,7,7,8,9,10,11,12,13],"17":[3,4,5,6,6,7,7,8,9,10,11,12,13,13],"18":[4,5,6,6,7,7,8,9,10,11,12,13,13,14],"19":[5,6,6,7,7,8,9,10,11,12,13,13,14,14],"20":[6,6,7,7,8,9,10,11,12,13,13,14,14,15],"21":[6,7,7,8,9,10,11,12,13,13,14,14,15,16],"22":[7,7,8,9,10,11,12,13,13,14,14,15,16,17],"23":[7,8,9,10,11,12,13,13,14,14,15,16,17,18],"24":[8,9,10,11,12,13,13,14,14,15,16,17,18,18],"25":[9,10,11,12,13,13,14,14,15,16,17,18,18,19],"26":[10,11,12,13,13,14,14,15,16,17,18,18,19,19],"27":[11,12,13,13,14,14,15,16,17,18,18,19,19,20],"28":[12,13,13,14,14,15,16,17,18,18,19,19,20,20],"29":[13,13,14,14,15,16,17,18,18,19,19,20,20,20],"30":[13,14,14,15,16,17,18,18,19,19,20,20,20,21],"31":[14,14,15,16,17,18,18,19,19,20,20,20,21,21],"32":[14,15,16,17,18,18,19,19,20,20,20,21,21,21],"33":[15,16,17,18,18,19,19,20,20,20,21,21,21,22],"34":[16,17,18,18,19,19,20,20,20,21,21,21,22,22],"35":[17,18,18,19,19,20,20,20,21,21,21,22,22,22],"36":[18,18,19,19,20,20,20,20,21,21,22,22,22,23],"37":[18,19,19,20,20,20,20,21,21,22,22,22,23,23],"38":[19,19,20,20,20,20,21,21,21,22,22,23,23,23],"39":[19,20,20,20,20,21,21,21,22,22,22,23,23,24],"40":[20,20,20,20,21,21,21,21,22,22,23,23,24,24],"41":[20,20,20,21,21,21,21,22,22,23,23,23,24,24],"42":[20,20,21,21,21,21,22,22,22,23,23,24,24,25],"43":[20,21,21,21,21,22,22,22,23,23,23,24,24,25],"44":[21,21,21,21,22,22,22,22,23,23,24,24,25,25],"45":[21,21,21,22,22,22,22,23,23,24,24,24,25,25],"46":[21,21,22,22,22,22,23,23,23,24,24,25,25,25],"47":[21,22,22,22,22,23,23,23,24,24,24,25,25,25],"48":[22,22,22,22,23,23,23,23,24,24,25,25,25,25],"49":[22,22,22,23,23,23,23,24,24,25,25,25,25,25],"50":[22,22,23,23,23,23,24,24,24,25,25,25,25,25],"51":[22,23,23,23,23,24,24,24,25,25,25,25,25,25],"52":[23,23,23,23,24,24,24,24,25,25,25,25,25,25],"53":[23,23,23,24,24,24,24,25,25,25,25,25,25,25],"54":[23,23,24,24,24,24,25,25,25,25,25,25,25,25],"55":[23,24,24,24,24,25,25,25,25,25,25,25,25,25],"56":[24,24,24,24,25,25,25,25,25,25,25,25,25,25],"57":[24,24,24,25,25,25,25,25,25,25,25,25,25,25],"58":[24,24,25,25,25,25,25,25,25,25,25,25,25,25],"59":[24,25,25,25,25,25,25,25,25,25,25,25,25,25],"60":[25,25,25,25,25,25,25,25,25,25,25,25,25,25]},
+
+                // Data transcribed from user-provided 'Men-running-score.xlsx'
+                run: {"8:30":[50,50,50,50,50,50,50,50,50,50,50,50,50,50],"8:40":[49,50,50,50,50,50,50,50,50,50,50,50,50,50],"8:50":[48,49,50,50,50,50,50,50,50,50,50,50,50,50],"9:00":[47,48,49,50,50,50,50,50,50,50,50,50,50,50],"9:10":[46,47,48,50,50,50,50,50,50,50,50,50,50,50],"9:20":[45,46,47,49,50,50,50,50,50,50,50,50,50,50],"9:30":[44,45,46,48,49,50,50,50,50,50,50,50,50,50],"9:40":[43,44,45,47,48,49,50,50,50,50,50,50,50,50],"9:50":[42,43,44,46,47,48,49,50,50,50,50,50,50,50],"10:00":[41,42,43,45,46,47,48,49,50,50,50,50,50,50],"10:10":[40,41,42,44,45,46,47,48,49,50,50,50,50,50],"10:20":[39,40,41,43,44,45,46,47,48,49,50,50,50,50],"10:30":[38,39,40,42,43,44,45,46,47,48,49,50,50,50],"10:40":[38,38,39,41,42,43,44,45,46,47,48,49,50,50],"10:50":[37,37,38,40,41,42,43,44,45,46,47,48,49,50],"11:00":[37,37,37,39,40,41,42,43,44,45,46,47,48,49],"11:10":[36,36,37,38,39,40,41,42,43,44,45,46,47,48],"11:20":[36,36,36,37,38,39,40,41,42,43,44,45,46,47],"11:30":[35,35,36,37,38,38,39,40,41,42,43,44,45,46],"11:40":[35,35,35,36,37,37,38,39,40,41,42,43,44,45],"11:50":[34,34,35,35,36,36,37,38,39,40,41,42,43,44],"12:00":[33,34,34,35,36,36,37,38,39,40,41,42,43,43],"12:10":[32,33,34,35,36,36,37,38,38,39,40,41,42,42],"12:20":[31,32,33,34,35,36,36,37,38,38,39,40,41,42],"12:30":[30,31,32,34,35,35,36,37,37,38,38,39,40,41],"12:40":[29,30,31,33,34,35,35,36,36,37,37,38,38,39],"12:50":[28,29,30,32,33,34,35,35,36,36,37,37,38,38],"13:00":[27,28,29,31,32,33,34,35,35,36,36,37,37,38],"13:10":[26,27,28,30,31,32,33,34,35,35,36,36,37,37],"13:20":[25,26,27,29,30,31,32,33,34,35,35,36,36,37],"13:30":[24,25,26,28,29,30,31,32,33,34,35,35,36,36],"13:40":[23,24,25,27,28,29,30,31,32,33,34,35,35,36],"13:50":[22,23,24,26,27,28,29,30,31,32,33,34,35,35],"14:00":[21,22,23,25,26,27,28,29,30,31,32,33,34,34],"14:10":[20,21,22,24,25,26,27,28,29,30,31,32,33,33],"14:20":[19,20,21,23,24,25,26,27,28,29,30,31,32,32],"14:30":[18,19,20,22,23,24,25,26,27,28,29,30,31,31],"14:40":[16,18,19,21,22,23,24,25,26,27,28,29,30,30],"14:50":[14,16,18,20,21,22,23,24,25,26,27,28,29,30],"15:00":[12,14,16,19,20,21,22,23,24,25,26,27,28,28],"15:10":[10,12,14,18,19,20,21,22,23,24,25,26,27,28],"15:20":[8,10,12,16,18,19,20,21,22,23,24,25,26,27],"15:30":[6,8,10,14,16,18,19,20,21,22,23,24,25,26],"15:40":[4,6,8,12,14,16,18,19,20,21,22,23,24,25],"15:50":[2,4,6,10,12,14,16,18,19,20,21,22,23,24],"16:00":[1,2,4,8,10,12,14,16,18,19,20,21,22,23],"16:10":[0,1,2,6,8,10,12,14,16,18,19,20,21,22],"16:20":[0,0,1,4,6,8,10,12,14,16,18,19,20,21],"16:30":[0,0,0,2,4,6,8,10,12,14,16,18,19,20],"16:40":[0,0,0,1,2,4,6,8,10,12,14,16,18,19],"16:50":[0,0,0,0,1,2,4,6,8,10,12,14,16,18],"17:00":[0,0,0,0,0,1,2,4,6,8,10,12,14,16],"17:10":[0,0,0,0,0,0,1,2,4,6,8,10,12,14],"17:20":[0,0,0,0,0,0,0,1,2,4,6,8,10,12],"17:30":[0,0,0,0,0,0,0,0,1,2,4,6,8,10],"17:40":[0,0,0,0,0,0,0,0,0,1,2,4,6,8],"17:50":[0,0,0,0,0,0,0,0,0,0,1,2,4,6],"18:00":[0,0,0,0,0,0,0,0,0,0,0,1,2,4],"18:10":[0,0,0,0,0,0,0,0,0,0,0,0,1,2],"18:20":[0,0,0,0,0,0,0,0,0,0,0,0,0,1]}
+            },
+            female: { 
+                //Data for female pushups
+                pushups: {"1":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"2":[0,0,0,0,0,0,0,0,0,0,0,0,0,1],"3":[0,0,0,0,0,0,0,0,0,0,0,0,1,5],"4":[0,0,0,0,0,0,0,0,0,0,0,1,5,10],"5":[0,0,0,0,0,0,0,0,0,0,1,5,10,15],"6":[0,0,0,0,0,0,0,0,0,1,5,10,15,15],"7":[0,0,0,0,0,0,0,0,1,5,10,15,15,16],"8":[0,0,0,0,0,0,0,1,5,10,15,15,16,17],"9":[0,0,0,0,0,0,1,5,10,15,15,16,17,18],"10":[0,0,0,0,0,1,5,10,15,15,16,17,18,18],"11":[0,0,0,0,1,5,10,15,15,16,17,18,18,19],"12":[0,0,0,1,5,10,15,15,16,17,18,18,19,19],"13":[0,0,1,5,10,15,15,16,17,18,18,19,19,20],"14":[0,1,5,10,15,15,16,17,18,19,19,19,20,20],"15":[1,5,10,15,15,16,17,18,18,19,19,20,20,21],"16":[5,10,15,15,16,17,18,18,19,19,20,20,21,21],"17":[10,15,15,16,17,18,18,18,19,20,20,21,21,22],"18":[15,15,16,17,18,18,18,19,19,20,21,21,22,22],"19":[15,16,17,18,18,18,19,19,20,20,21,22,22,23],"20":[16,17,18,18,18,19,19,19,20,21,22,22,23,23],"21":[17,18,18,18,19,19,19,20,20,21,22,23,23,24],"22":[18,18,18,19,19,19,20,20,21,21,22,23,24,24],"23":[18,18,19,19,19,20,20,20,21,22,23,24,24,25],"24":[18,19,19,19,20,20,20,21,21,22,23,24,25,25],"25":[19,19,19,20,20,21,21,21,22,22,23,25,25,25],"26":[19,19,20,20,20,21,21,21,22,23,24,25,25,25],"27":[19,20,20,20,21,21,21,22,22,23,24,25,25,25],"28":[20,20,20,21,21,21,22,22,23,23,24,25,25,25],"29":[20,20,20,21,21,22,22,22,23,24,25,25,25,25],"30":[20,20,21,21,22,22,22,23,23,24,25,25,25,25],"31":[20,20,21,21,22,22,23,23,24,24,25,25,25,25],"32":[20,21,21,22,22,23,23,23,24,25,25,25,25,25],"33":[21,21,21,22,22,23,23,24,24,25,25,25,25,25],"34":[21,21,22,22,23,23,24,24,25,25,25,25,25,25],"35":[21,21,22,22,23,23,24,24,25,25,25,25,25,25],"36":[21,22,22,23,23,24,24,25,25,25,25,25,25,25],"37":[22,22,22,23,23,24,24,25,25,25,25,25,25,25],"38":[22,22,23,23,24,24,25,25,25,25,25,25,25,25],"39":[22,22,23,23,24,24,25,25,25,25,25,25,25,25],"40":[22,23,23,24,24,25,25,25,25,25,25,25,25,25],"41":[23,23,23,24,24,25,25,25,25,25,25,25,25,25],"42":[23,23,24,24,25,25,25,25,25,25,25,25,25,25],"43":[23,23,24,24,25,25,25,25,25,25,25,25,25,25],"44":[23,24,24,25,25,25,25,25,25,25,25,25,25,25],"45":[24,24,24,25,25,25,25,25,25,25,25,25,25,25],"46":[24,24,25,25,25,25,25,25,25,25,25,25,25,25],"47":[24,24,25,25,25,25,25,25,25,25,25,25,25,25],"48":[24,25,25,25,25,25,25,25,25,25,25,25,25,25],"49":[24,25,25,25,25,25,25,25,25,25,25,25,25,25],"50":[25,25,25,25,25,25,25,25,25,25,25,25,25,25]},
+                //Data for female situps
+                situps: {"1":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"2":[0,0,0,0,0,0,0,0,0,0,0,0,0,1],"3":[0,0,0,0,0,0,0,0,0,0,0,0,1,2],"4":[0,0,0,0,0,0,0,0,0,0,0,1,2,4],"5":[0,0,0,0,0,0,0,0,0,0,1,2,4,6],"6":[0,0,0,0,0,0,0,0,0,1,2,4,6,8],"7":[0,0,0,0,0,0,0,0,1,2,4,6,8,10],"8":[0,0,0,0,0,0,0,1,2,4,6,8,10,11],"9":[0,0,0,0,0,0,1,2,4,6,8,10,11,12],"10":[0,0,0,0,0,1,2,4,6,8,10,11,12,13],"11":[0,0,0,0,1,2,4,6,8,10,11,12,13,14],"12":[0,0,0,1,2,4,6,8,10,11,12,13,14,15],"13":[0,0,1,2,4,6,8,10,11,12,13,14,15,15],"14":[0,1,2,4,6,8,10,11,12,13,14,15,15,16],"15":[1,2,4,6,8,10,11,12,13,14,15,15,16,16],"16":[2,4,6,8,10,11,12,13,14,15,15,16,16,17],"17":[4,6,8,10,11,12,13,14,15,15,16,16,17,18],"18":[6,8,10,11,12,13,14,15,15,16,16,17,18,18],"19":[8,10,11,12,13,14,15,15,16,16,17,18,18,19],"20":[10,11,12,13,14,15,15,16,16,17,18,18,19,19],"21":[11,12,13,14,15,15,16,16,17,18,18,19,19,20],"22":[12,13,14,15,15,16,16,17,18,18,19,19,20,21],"23":[13,14,15,15,16,16,17,18,18,19,19,20,21,22],"24":[14,15,15,16,16,17,18,18,19,19,20,21,22,23],"25":[15,15,16,16,17,18,18,19,19,20,21,22,23,23],"26":[15,16,16,17,18,18,19,19,20,20,22,23,23,24],"27":[16,16,17,18,18,19,19,20,20,21,23,23,24,24],"28":[16,17,18,18,19,19,20,20,21,21,23,24,24,25],"29":[17,18,18,19,19,20,20,21,21,22,24,24,25,25],"30":[18,18,19,19,20,20,21,21,22,22,24,25,25,25],"31":[18,18,19,20,20,21,21,22,22,23,25,25,25,25],"32":[18,19,19,20,21,21,22,22,23,23,25,25,25,25],"33":[19,19,20,20,21,22,22,23,23,24,25,25,25,25],"34":[19,19,20,21,22,22,23,23,24,24,25,25,25,25],"35":[19,20,20,21,22,23,23,23,24,25,25,25,25,25],"36":[20,20,21,21,22,23,23,24,24,25,25,25,25,25],"37":[20,20,21,22,23,23,24,24,25,25,25,25,25,25],"38":[20,21,21,22,23,24,24,24,25,25,25,25,25,25],"39":[21,21,22,22,23,24,24,25,25,25,25,25,25,25],"40":[21,21,22,23,24,24,25,25,25,25,25,25,25,25],"41":[21,22,22,23,24,25,25,25,25,25,25,25,25,25],"42":[22,22,23,23,24,25,25,25,25,25,25,25,25,25],"43":[22,22,23,24,25,25,25,25,25,25,25,25,25,25],"44":[22,23,23,24,25,25,25,25,25,25,25,25,25,25],"45":[23,23,24,24,25,25,25,25,25,25,25,25,25,25],"46":[23,23,24,25,25,25,25,25,25,25,25,25,25,25],"47":[23,24,24,25,25,25,25,25,25,25,25,25,25,25],"48":[24,24,25,25,25,25,25,25,25,25,25,25,25,25],"49":[24,24,25,25,25,25,25,25,25,25,25,25,25,25],"50":[24,25,25,25,25,25,25,25,25,25,25,25,25,25],"51":[24,25,25,25,25,25,25,25,25,25,25,25,25,25],"52":[25,25,25,25,25,25,25,25,25,25,25,25,25,25]},
+                //Data for female run
+                run: {"21:40":[0,0,0,0,0,0,0,0,0,0,1,2,4,6],"21:30":[0,0,0,0,0,0,0,0,0,1,2,4,6,8],"21:20":[0,0,0,0,0,0,0,0,1,2,4,6,8,10],"21:10":[0,0,0,0,0,0,0,1,2,4,6,8,10,12],"21:00":[0,0,0,0,0,0,1,2,4,6,8,10,12,14],"20:50":[0,0,0,0,0,1,2,4,6,8,10,12,14,16],"20:40":[0,0,0,0,1,2,4,6,8,10,12,14,16,18],"20:30":[0,0,0,1,2,4,6,8,10,12,14,16,18,20],"20:20":[0,0,1,2,4,6,8,10,12,14,16,18,20,21],"20:10":[0,1,2,4,6,8,10,12,14,16,18,20,21,22],"20:00":[1,2,4,6,8,10,12,14,16,18,20,21,22,23],"19:50":[2,4,6,8,10,12,14,16,18,20,21,22,23,24],"19:40":[4,6,8,10,12,14,16,18,20,21,22,23,24,25],"19:30":[6,8,10,12,14,16,18,20,21,22,23,24,25,26],"19:20":[8,10,12,14,16,18,20,21,22,23,24,25,26,27],"19:10":[10,12,14,16,18,20,21,22,23,24,25,26,27,28],"19:00":[12,14,16,18,20,21,22,23,24,25,26,27,28,29],"18:50":[14,16,18,20,21,22,23,24,25,26,27,28,29,30],"18:40":[16,18,20,21,22,23,24,25,26,27,28,29,30,30],"18:30":[18,20,21,22,23,24,25,26,27,28,29,30,30,31],"18:20":[20,21,22,23,24,25,26,27,28,29,30,30,31,31],"18:10":[21,22,23,24,25,26,27,28,29,30,30,31,31,32],"18:00":[22,23,24,25,26,27,28,29,30,30,31,31,32,32],"17:50":[23,24,25,26,27,28,29,30,30,31,31,32,32,33],"17:40":[24,25,26,27,28,29,30,30,31,31,32,32,33,33],"17:30":[25,26,27,28,29,30,30,31,31,32,32,33,33,34],"17:20":[26,27,28,29,30,30,31,31,32,32,33,33,34,34],"17:10":[27,28,29,30,30,31,31,32,32,33,33,34,34,35],"17:00":[28,29,30,30,31,31,32,32,33,33,34,34,35,35],"16:50":[29,30,30,31,31,32,32,33,33,34,34,35,35,35],"16:40":[30,30,31,31,32,32,33,33,34,34,35,35,35,36],"16:30":[30,31,31,32,32,33,33,34,34,35,35,35,36,36],"16:20":[31,31,32,32,33,33,34,34,35,35,35,36,36,36],"16:10":[31,32,32,33,33,34,34,35,35,35,36,36,36,37],"16:00":[32,32,33,33,34,34,35,35,35,36,36,36,37,37],"15:50":[32,33,33,34,34,35,35,35,36,36,36,37,37,37],"15:40":[33,33,34,34,35,35,35,36,36,36,37,37,37,38],"15:30":[33,34,34,35,35,35,36,36,36,37,37,37,38,38],"15:20":[34,34,35,35,35,36,36,36,37,37,37,38,38,38],"15:10":[34,35,35,35,36,36,36,37,37,37,38,38,38,39],"15:00":[35,35,35,36,36,36,37,37,37,38,38,38,39,39],"14:50":[35,35,36,36,36,37,37,37,38,38,38,39,39,41],"14:40":[35,36,36,36,37,37,37,38,38,38,39,39,41,41],"14:30":[36,36,36,37,37,37,38,38,38,39,39,41,41,42],"14:20":[36,36,37,37,37,38,38,38,39,39,41,41,42,42],"14:10":[36,37,37,37,38,38,38,39,39,41,41,42,42,43],"14:00":[37,37,37,38,38,38,39,39,41,41,42,42,43,43],"13:50":[37,37,38,38,38,39,39,41,41,42,42,43,43,44],"13:40":[37,38,38,38,39,39,41,41,42,42,43,43,44,44],"13:30":[38,38,38,39,39,41,41,42,42,43,43,44,44,45],"13:20":[38,38,39,39,41,41,42,42,43,43,44,44,45,46],"13:10":[38,39,39,41,41,42,42,43,43,44,44,45,45,46],"13:00":[39,39,41,41,42,42,43,43,44,44,45,45,46,46],"12:50":[39,41,41,42,42,43,43,44,44,45,45,46,46,47],"12:40":[41,41,42,42,43,43,44,44,45,45,46,46,47,48],"12:30":[41,42,42,43,43,44,44,45,45,46,46,47,48,49],"12:20":[42,42,43,43,44,44,45,45,46,46,47,48,49,50],"12:10":[42,43,43,44,44,45,45,46,46,47,48,49,50,50],"12:00":[43,43,44,44,45,45,46,46,47,48,49,50,50,50],"11:50":[43,44,44,45,45,46,46,47,48,49,50,50,50,50],"11:40":[44,44,45,45,46,46,47,48,49,50,50,50,50,50],"11:30":[44,45,45,46,46,47,48,49,50,50,50,50,50,50],"11:20":[45,45,46,46,47,48,49,50,50,50,50,50,50,50],"11:10":[45,46,46,47,48,49,50,50,50,50,50,50,50,50],"11:00":[46,46,47,48,49,50,50,50,50,50,50,50,50,50],"10:50":[46,47,48,49,50,50,50,50,50,50,50,50,50,50],"10:40":[47,48,49,50,50,50,50,50,50,50,50,50,50,50],"10:30":[47,49,50,50,50,50,50,50,50,50,50,50,50,50],"10:20":[48,50,50,50,50,50,50,50,50,50,50,50,50,50],"10:10":[49,50,50,50,50,50,50,50,50,50,50,50,50,50],"10:00":[50,50,50,50,50,50,50,50,50,50,50,50,50,50]}
+            }
+        };
+
+        function getAgeGroupIndex(age) {
+            if (age <= 21) return 0;
+            if (age >= 22 && age <= 24) return 1;
+            if (age >= 25 && age <= 27) return 2;
+            if (age >= 28 && age <= 30) return 3;
+            if (age >= 31 && age <= 33) return 4;
+            if (age >= 34 && age <= 36) return 5;
+            if (age >= 37 && age <= 39) return 6;
+            if (age >= 40 && age <= 42) return 7;
+            if (age >= 43 && age <= 45) return 8;
+            if (age >= 46 && age <= 48) return 9;
+            if (age >= 49 && age <= 51) return 10;
+            if (age >= 52 && age <= 54) return 11;
+            if (age >= 55 && age <= 57) return 12;
+            if (age >= 58 && age <= 60) return 13;
+            return 13; 
+        }
+
+        function getStationScore(reps, age, gender, station) {
+            if (gender === 'male') {
+                if (station === 'pushups' && reps > 60) reps = 60;
+                if (station === 'situps' && reps > 60) reps = 60;
+            } else if (gender === 'female') {
+                if (station === 'pushups' && reps > 50) reps = 50;
+                if (station === 'situps' && reps > 52) reps = 52;
+            }
+
+            const chart = CHARTS[gender][station];
+            const ageIndex = getAgeGroupIndex(age);
+            if (!chart[reps]) return 0;
+            const score = chart[reps][ageIndex];
+            return score === undefined || score < 0 ? 0 : score;
+        }
+
+        function getRunScore(totalSeconds, age, gender) {
+            const chart = CHARTS[gender].run;
+            const timeBrackets = Object.keys(chart).sort((a, b) => {
+                const aSecs = parseInt(a.split(':')[0]) * 60 + parseInt(a.split(':')[1]);
+                const bSecs = parseInt(b.split(':')[0]) * 60 + parseInt(b.split(':')[1]);
+                return aSecs - bSecs;
+            });
+
+            for (const timeStr of timeBrackets) {
+                const bracketSecs = parseInt(timeStr.split(':')[0]) * 60 + parseInt(timeStr.split(':')[1]);
+                if (totalSeconds <= bracketSecs) {
+                    const ageIndex = getAgeGroupIndex(age);
+                    const score = chart[timeStr][ageIndex];
+                    return score === undefined || score < 0 ? 0 : score;
+                }
+            }
+            return 0;
+        }
+        
+        function calculateIpptResult(pushups, situps, runTime, age, gender) {
+             if (!age || age <= 0) {
+                 return { award: "Enter Age", awardClass: "bg-gray-200 text-gray-700", totalPoints: 0, pushupPoints: 0, situpPoints: 0, runPoints: 0 };
+            }
+            
+            const [minutes, seconds] = runTime.split(':').map(Number);
+            const totalSeconds = (minutes * 60) + (isNaN(seconds) ? 0 : seconds);
+            
+            const pushupPoints = getStationScore(pushups, age, gender, 'pushups');
+            const situpPoints = getStationScore(situps, age, gender, 'situps');
+            const runPoints = /^\d{1,2}:\d{2}$/.test(runTime) ? getRunScore(totalSeconds, age, gender) : 0;
+
+            const totalPoints = pushupPoints + situpPoints + runPoints;
+            
+            let passThreshold = 61, silverThreshold = 75, goldThreshold = 85;
+            
+            let award = "Fail", awardClass = "bg-red-100 text-red-800";
+            if(pushupPoints >= 1 && situps >= 1 && runPoints >= 1 && totalPoints >= 51) { // Base pass requirement
+                if (totalPoints >= goldThreshold) { award = "Gold"; awardClass = "bg-yellow-100 text-yellow-800"; } 
+                else if (totalPoints >= silverThreshold) { award = "Silver"; awardClass = "bg-slate-200 text-slate-800"; } 
+                else if (totalPoints >= passThreshold) { award = "Pass"; awardClass = "bg-green-100 text-green-800"; }
+            }
+            
+            return { award, awardClass, totalPoints, pushupPoints, situpPoints, runPoints };
+        }
+
+        function createAttemptRow(id) {
+            const attemptDiv = document.createElement('div');
+            attemptDiv.className = 'attempt-row grid grid-cols-1 md:grid-cols-10 gap-4 items-start bg-slate-100 p-3 rounded-lg';
+            attemptDiv.dataset.id = id;
+            attemptDiv.innerHTML = `
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-slate-600">Push-ups</label>
+                    <input type="number" class="mt-1 pushups-input w-full rounded-md bg-white border-slate-300 shadow-sm text-sm p-2.5" placeholder="Reps">
+                    <span class="text-xs text-sky-600 points-span pushup-points">Points: --</span>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-slate-600">Sit-ups</label>
+                    <input type="number" class="mt-1 situps-input w-full rounded-md bg-white border-slate-300 shadow-sm text-sm p-2.5" placeholder="Reps">
+                    <span class="text-xs text-sky-600 points-span situp-points">Points: --</span>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-slate-600">2.4km Run</label>
+                    <input type="text" class="mt-1 run-input w-full rounded-md bg-white border-slate-300 shadow-sm text-sm p-2.5" placeholder="mm:ss">
+                    <span class="text-xs text-sky-600 points-span run-points">Points: --</span>
+                </div>
+                <div class="md:col-span-3 flex flex-col items-center justify-center text-center h-full pt-4 md:pt-0">
+                    <span class="block text-xs font-medium text-slate-500 mb-1">Result</span>
+                    <span class="result-span inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-semibold">---</span>
+                </div>
+                <div class="md:col-span-1 flex items-center justify-center h-full">
+                    <button class="delete-attempt-btn text-slate-400 hover:text-red-600 transition-colors p-2 rounded-full mt-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>`;
+            
+            const updateTrigger = () => updateResult(attemptDiv);
+            attemptDiv.querySelectorAll('input').forEach(input => input.addEventListener('input', updateTrigger));
+            
+            const deleteBtn = attemptDiv.querySelector('.delete-attempt-btn');
+            deleteBtn.addEventListener('click', () => {
+                attemptDiv.remove();
+                if (attemptsContainer.children.length === 0) {
+                    weaknessAnalysisSection.classList.add('hidden');
+                }
+            });
+
+            return attemptDiv;
+        }
+
+        function updateResult(attemptDiv) {
+            const pushups = parseInt(attemptDiv.querySelector('.pushups-input').value) || 0;
+            const situps = parseInt(attemptDiv.querySelector('.situps-input').value) || 0;
+            const runTime = attemptDiv.querySelector('.run-input').value;
+            const age = parseInt(ageEl.value);
+            const gender = genderEl.value;
+            const resultSpan = attemptDiv.querySelector('.result-span');
+            
+            const pushupPointsSpan = attemptDiv.querySelector('.pushup-points');
+            const situpPointsSpan = attemptDiv.querySelector('.situp-points');
+            const runPointsSpan = attemptDiv.querySelector('.run-points');
+
+            const resetPoints = () => {
+                pushupPointsSpan.textContent = 'Points: --';
+                situpPointsSpan.textContent = 'Points: --';
+                runPointsSpan.textContent = 'Points: --';
+            };
+
+            if (!age || age <= 0) {
+                resultSpan.textContent = `Enter Age`;
+                resultSpan.className = `result-span inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700`;
+                resetPoints();
+                return;
+            }
+
+            const { award, awardClass, totalPoints, pushupPoints, situpPoints, runPoints } = calculateIpptResult(pushups, situps, runTime, age, gender);
+            
+            pushupPointsSpan.textContent = `Points: ${pushupPoints}`;
+            situpPointsSpan.textContent = `Points: ${situpPoints}`;
+            runPointsSpan.textContent = `Points: ${runPoints}`;
+
+            if (/^\d{1,2}:\d{2}$/.test(runTime) && pushups >= 0 && situps >= 0) {
+                resultSpan.textContent = `${award} (${totalPoints} pts)`;
+                resultSpan.className = `result-span inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-semibold ${awardClass}`;
+            } else {
+                resultSpan.textContent = '---';
+                resultSpan.className = 'result-span inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-semibold';
+            }
+        }
+        
+        // --- Gemini API Call Helper ---
+        async function callGemini(prompt, outputEl, buttonEl, loadingMessages = []) {
+            const apiKey = apiKeyEl.value;
+            if (!apiKey) {
+                const target = buttonEl.id === 'generate-plan-btn' ? generationStatusEl : outputEl;
+                target.innerHTML = `<span class="text-red-500 font-semibold">Please enter your Google AI API Key to proceed.</span>`;
+                apiKeyEl.focus();
+                return null;
+            }
+            
+            let messageInterval;
+            if (buttonEl) {
+                buttonEl.disabled = true;
+                buttonEl.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            
+            if (loadingMessages.length > 0) {
+                let messageIndex = 0;
+                const updateMessage = () => {
+                    outputEl.innerHTML = `<div class="flex flex-col justify-center items-center"><div class="loader"></div><p class="mt-2 text-sky-600">${loadingMessages[messageIndex]}</p></div>`;
+                    messageIndex = (messageIndex + 1) % loadingMessages.length;
+                };
+                updateMessage();
+                messageInterval = setInterval(updateMessage, 2500);
+            } else {
+                 outputEl.innerHTML = '<div class="flex justify-center items-center"><div class="loader"></div></div>';
+            }
+
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData?.error?.message || `API Error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!text) throw new Error('No content received from AI.');
+
+                outputEl.innerHTML = simpleMarkdownToHtml(text);
+                return text; 
+
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                outputEl.innerHTML = `<span class="text-red-500 font-semibold">Error: ${error.message}</span>`;
+                return null;
+            } finally {
+                if(messageInterval) clearInterval(messageInterval);
+                if (buttonEl) {
+                    buttonEl.disabled = false;
+                    buttonEl.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
+        }
+        
+        // --- Data Gathering ---
+        function getOfficerData() {
+            const officerData = {
+                name: nameEl.value,
+                age: ageEl.value,
+                gender: genderEl.value,
+                workCycle: workCycleEl.value,
+                medicalStatus: medicalFitnessEl.value,
+                targetGoal: targetGoalEl.value,
+                attempts: []
+            };
+            document.querySelectorAll('.attempt-row').forEach((row, index) => {
+                officerData.attempts.push({
+                    attempt: index + 1,
+                    pushups: row.querySelector('.pushups-input').value,
+                    situps: row.querySelector('.situps-input').value,
+                    runTime: row.querySelector('.run-input').value,
+                    result: row.querySelector('.result-span').textContent
+                });
+            });
+            return officerData;
+        }
+
+        // --- Feature Functions ---
+        function exportToExcel() {
+            const officerData = getOfficerData();
+            if (officerData.attempts.length === 0) {
+                return;
+            }
+
+            const ws_data = [
+                ["Officer's Details"],
+                ["Name", officerData.name],
+                ["Age", officerData.age],
+                ["Gender", officerData.gender],
+                ["Medical Status", officerData.medicalStatus],
+                [],
+                ["IPPT Attempts"]
+            ];
+
+            const headers = ["Attempt #", "Push-ups", "Sit-ups", "2.4km Run", "Result"];
+            ws_data.push(headers);
+
+            officerData.attempts.forEach(attempt => {
+                ws_data.push([
+                    attempt.attempt,
+                    attempt.pushups,
+                    attempt.situps,
+                    attempt.runTime,
+                    attempt.result
+                ]);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(ws_data);
+            ws['!cols'] = [ {wch:15}, {wch:15}, {wch:15}, {wch:15}, {wch:30} ];
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "IPPT Attempts");
+            const fileName = `${officerData.name.replace(/\s+/g, '_') || 'Officer'}_IPPT_Attempts.xlsx`;
+            XLSX.writeFile(wb, fileName);
+        }
+        
+        async function analyzeWeakness() {
+            const officerData = getOfficerData();
+            if (officerData.attempts.length === 0) return;
+
+            let prompt = `You are a friendly and encouraging fitness buddy! 🤸‍♂️ Analyze the following IPPT results for an officer named ${officerData.name}. In simple terms, point out their weakest station based on the points. Use emoticons to make your one-paragraph explanation fun and motivating.
+            
+            Results:
+            ${officerData.attempts.map(att => `- Push-ups: ${att.pushups}, Sit-ups: ${att.situps}, 2.4km Run: ${att.runTime} (Result: ${att.result})`).join('\n')}
+            
+            Keep the analysis concise and encouraging.`;
+
+            await callGemini(prompt, weaknessOutput, analyzeWeaknessBtn);
+        }
+
+        async function generatePlan() {
+            if (!nameEl.value || !ageEl.value || !medicalFitnessEl.value || !targetGoalEl.value || attemptsContainer.children.length === 0) {
+                generationStatusEl.innerHTML = `<span class="text-red-500 font-semibold">Please fill in all details including Name, Age, Target Goal, Medical Status, and add at least one IPPT attempt.</span>`;
+                return;
+            }
+             if (parseInt(ageEl.value) <=0) {
+                generationStatusEl.innerHTML = `<span class="text-red-500 font-semibold">Please enter a valid age.</span>`;
+                return;
+            }
+            
+            outputSectionEl.classList.add('hidden');
+            dietaryOutput.classList.add('hidden');
+
+            const officerData = getOfficerData();
+            let prompt = `You are a super motivating and friendly fitness buddy! 💪 Your goal is to create a simple and fun 4-week IPPT training plan for an officer. Use simple language and lots of encouraging emoticons (like 👍, 🎉, 🔥). Make the plan easy to understand and follow.
+                
+                Officer's Details:
+                - Name: ${officerData.name}, Age: ${officerData.age}, Gender: ${officerData.gender}
+                - Work Cycle: ${officerData.workCycle}. This is very important. For 'GRF Officer', their schedule is a 4-day cycle: Morning shift (8am-7:30pm), Night shift (7:30pm-8am), Off-day, Off-day. For 'Office Hours', they work Monday to Friday 9am-6pm. The training plan MUST be tailored to this work schedule realistically.
+                - Medical Status: ${officerData.medicalStatus}
+                - TARGET GOAL: Achieve IPPT ${officerData.targetGoal}
+                
+                Past IPPT Attempts:
+                ${officerData.attempts.map(att => `- Push-ups: ${att.pushups}, Sit-ups: ${att.situps}, 2.4km Run: ${att.runTime} (${att.result})`).join('\n')}
+
+                Your response must be a detailed, encouraging, and actionable 4-week plan focused on bridging the gap from their current results to their ${officerData.targetGoal} target. Include:
+                1. A brief, encouraging opening statement acknowledging their goal.
+                2. An analysis of their weakest stations in the context of their goal.
+                3. A week-by-week schedule (Week 1-4) with specific, progressively challenging exercises (sets, reps, distances) and 2-3 rest days per week, planned around their specific work cycle.
+                4. Tips on proper form.
+                5. If medical status indicates limitations (e.g., 'excused running'), suggest alternatives.
+                6. Format using Markdown (headings, bold, bullets).`;
+            
+            const loadingMessages = [
+                "Hold on... 🏃‍♂️",
+                "Millions of computers are working on this... 💻",
+                "We're almost there, but not yet... 🤔",
+                "Almost... ✨"
+            ];
+
+            const planText = await callGemini(prompt, generationStatusEl, generatePlanBtn, loadingMessages);
+            
+            if(planText) {
+                planOutputEl.innerHTML = simpleMarkdownToHtml(planText);
+                outputSectionEl.classList.remove('hidden');
+                generationStatusEl.innerHTML = '<span class="text-green-500 font-semibold">Your plan is ready! ✅</span>';
+            }
+        }
+        
+        async function getDietaryAdvice() {
+            dietaryOutput.classList.remove('hidden');
+            const officerData = getOfficerData();
+            let prompt = `You are a friendly food coach! 🥑 Your goal is to give 5 simple and easy-to-follow dietary tips for an officer in Singapore who wants to improve their IPPT score. Use simple words and fun emoticons (like 🍎, 🥦, 💧). Make the advice practical and mention some yummy local food choices.
+            
+            Officer's Details:
+            - Age: ${officerData.age}
+            
+            Generate 5 simple, actionable dietary tips to support their training. Do not create a full meal plan. Format as a bulleted list using Markdown.`;
+
+            await callGemini(prompt, dietaryOutput, dietaryBtn);
+        }
+        
+        // --- UI and Event Listeners ---
+        function simpleMarkdownToHtml(md) {
+            return md.replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mt-4 mb-2">$1</h3>').replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-6 mb-3 border-b pb-1 border-slate-300">$1</h2>').replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-8 mb-4">$1</h1>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/^\s*-\s(.*$)/gim, '<li class="ml-4">$1</li>').replace(/<\/li>\n<li/g, '</li><li').replace(/(<li.*?>[\s\S]*?<\/li>)/g, '<ul>$1</ul>').replace(/<\/ul>\s*<ul>/g, '').replace(/\n/g, '<br>');
+        }
+        
+        const fullRecalculateTrigger = () => {
+            document.querySelectorAll('.attempt-row').forEach(row => updateResult(row));
+        }
+
+        const updateAgeGroupDisplay = () => {
+            const age = parseInt(ageEl.value);
+            if(age > 0) {
+                ageGroupDisplayEl.textContent = `Age Group: ${getAgeGroupIndex(age) + 1}`;
+            } else {
+                ageGroupDisplayEl.textContent = 'Age Group: --';
+            }
+        };
+
+        let attemptCount = 0;
+        addAttemptBtn.addEventListener('click', () => {
+            attemptCount++;
+            const newRow = createAttemptRow(attemptCount);
+            attemptsContainer.appendChild(newRow);
+            weaknessAnalysisSection.classList.remove('hidden');
+            addAttemptBtnText.textContent = 'Add Another Attempt';
+        });
+        
+        clearAllBtn.addEventListener('click', () => {
+            nameEl.value = '';
+            ageEl.value = '';
+            genderEl.value = 'male';
+            workCycleEl.value = 'GRF Officer';
+            medicalFitnessEl.value = 'None';
+            targetGoalEl.value = '';
+            
+            attemptsContainer.innerHTML = '';
+            attemptCount = 0;
+            outputSectionEl.classList.add('hidden');
+            weaknessAnalysisSection.classList.add('hidden');
+            weaknessOutput.innerHTML = '';
+            dietaryOutput.innerHTML = '';
+            generationStatusEl.innerHTML = '';
+            addAttemptBtnText.textContent = 'Add First Attempt';
+            updateAgeGroupDisplay();
+        });
+
+        generatePlanBtn.addEventListener('click', generatePlan);
+        analyzeWeaknessBtn.addEventListener('click', analyzeWeakness);
+        dietaryBtn.addEventListener('click', getDietaryAdvice);
+        exportExcelBtn.addEventListener('click', exportToExcel);
+        
+        // --- Theme Toggle Logic ---
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            } else {
+                document.body.classList.remove('dark-mode');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            }
+        };
+
+        const savedTheme = localStorage.getItem('theme') || 'light'; // Changed default to 'light'
+        applyTheme(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // Attaching global listeners once
+        ageEl.addEventListener('input', () => {
+            updateAgeGroupDisplay();
+            fullRecalculateTrigger();
+        });
+        genderEl.addEventListener('change', fullRecalculateTrigger);
+    </script>
 </body>
 </html>
