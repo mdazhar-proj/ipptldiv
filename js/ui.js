@@ -130,15 +130,32 @@ export function getOfficerData() {
         targetGoal: DOM.targetGoalEl.value,
         attempts: []
     };
+
+    const ageNum = parseInt(DOM.ageEl.value) || 0;
+    const gender = DOM.genderEl.value || 'male';
+
     document.querySelectorAll('.attempt-row').forEach((row, index) => {
+        const pushups = parseInt(row.querySelector('.pushups-input').value) || 0;
+        const situps = parseInt(row.querySelector('.situps-input').value) || 0;
+        const runTime = row.querySelector('.run-input').value || '';
+
+        // authoritative numeric scoring using charts.calculateIpptResult
+        const score = calculateIpptResult(pushups, situps, runTime, ageNum, gender);
+
         officerData.attempts.push({
             attempt: index + 1,
-            pushups: row.querySelector('.pushups-input').value,
-            situps: row.querySelector('.situps-input').value,
-            runTime: row.querySelector('.run-input').value,
-            result: row.querySelector('.result-span').textContent
+            pushups,
+            pushupPoints: score.pushupPoints,
+            situps,
+            situpPoints: score.situpPoints,
+            runTime,
+            runPoints: score.runPoints,
+            totalPoints: score.totalPoints,
+            award: score.award,
+            resultText: row.querySelector('.result-span').textContent
         });
     });
+
     return officerData;
 }
 
@@ -180,15 +197,40 @@ export function exportToExcel() {
 export async function analyzeWeakness() {
     const officerData = getOfficerData();
     if (officerData.attempts.length === 0) return;
+    // Build authoritative, machine-readable attempt summary (model must not recalc these values)
+    const attemptsSummary = officerData.attempts.map(a => ({
+        attempt: a.attempt,
+        pushups: a.pushups,
+        pushupPoints: a.pushupPoints,
+        situps: a.situps,
+        situpPoints: a.situpPoints,
+        runTime: a.runTime,
+        runPoints: a.runPoints,
+        totalPoints: a.totalPoints,
+        award: a.award
+    }));
 
-    let prompt = `You are a friendly and encouraging fitness buddy! 🤸‍♂️ Analyze the following IPPT results for an officer named ${officerData.name}. In simple terms, point out their weakest station based on the points. Use emoticons to make your one-paragraph explanation fun and motivating.
+    const verificationTag = 'REFERENCED_POINTS_JSON:';
+    const prompt = `You are a friendly and encouraging fitness buddy! 🤸‍♂️\n\nOfficer: ${officerData.name} (Age: ${officerData.age}, Gender: ${officerData.gender})\nTarget Goal: ${officerData.targetGoal}\n\nAUTHORITATIVE ATTEMPTS JSON (do NOT recalculate or change these numbers):\n${JSON.stringify(attemptsSummary, null, 2)}\n\nTask: Using ONLY the numeric station points and totalPoints in the JSON above, write one concise, encouraging paragraph (1-3 sentences) that identifies the officer's weakest station(s) across the attempts and gives a short motivating tip. Do NOT invent, change, or re-compute any point values. If you notice inconsistencies, point them out but do not modify numbers.\n\nFinally, append the following exact marker line and then the exact JSON you were given (no changes):\n${verificationTag}\n${JSON.stringify(attemptsSummary, null, 2)}`;
 
-Results:
-${officerData.attempts.map(att => `- Push-ups: ${att.pushups}, Sit-ups: ${att.situps}, 2.4km Run: ${att.runTime} (Result: ${att.result})`).join('\n')}
+    const aiText = await callGemini({ apiKey: DOM.apiKeyEl.value, prompt, outputEl: DOM.weaknessOutput, buttonEl: DOM.analyzeWeaknessBtn });
 
-Keep the analysis concise and encouraging.`;
-
-    await callGemini({ apiKey: DOM.apiKeyEl.value, prompt, outputEl: DOM.weaknessOutput, buttonEl: DOM.analyzeWeaknessBtn });
+    // Verify AI echoed back the exact JSON block we provided
+    if (aiText && aiText.includes(verificationTag)) {
+        const idx = aiText.indexOf(verificationTag) + verificationTag.length;
+        const echoed = aiText.slice(idx).trim();
+        try {
+            const parsed = JSON.parse(echoed);
+            const same = JSON.stringify(parsed) === JSON.stringify(attemptsSummary);
+            if (!same) {
+                DOM.weaknessOutput.innerHTML += `<div class="mt-3 p-3 rounded bg-red-50 text-red-700">Warning: the AI's echoed verification JSON does not match the authoritative scores from this site. Please review the numbers above.</div>`;
+            }
+        } catch (e) {
+            DOM.weaknessOutput.innerHTML += `<div class="mt-3 p-3 rounded bg-red-50 text-red-700">Warning: the AI did not return a valid verification JSON block. The AI output may have hallucinated numeric scores.</div>`;
+        }
+    } else {
+        DOM.weaknessOutput.innerHTML += `<div class="mt-3 p-3 rounded bg-red-50 text-red-700">Warning: the AI did not append the required verification JSON. The AI output may have hallucinated numeric scores.</div>`;
+    }
 }
 
 export async function generatePlan() {
@@ -205,24 +247,21 @@ export async function generatePlan() {
     DOM.dietaryOutput.classList.add('hidden');
 
     const officerData = getOfficerData();
-    let prompt = `You are a super motivating and friendly fitness buddy! 💪 Your goal is to create a simple and fun 4-week IPPT training plan for an officer. Use simple language and lots of encouraging emoticons (like 👍, 🎉, 🔥). Make the plan easy to understand and follow.
+    // Provide a machine-readable attempts summary (authoritative points) and instruct model NOT to recalc points
+    const attemptsSummary = officerData.attempts.map(a => ({
+        attempt: a.attempt,
+        pushups: a.pushups,
+        pushupPoints: a.pushupPoints,
+        situps: a.situps,
+        situpPoints: a.situpPoints,
+        runTime: a.runTime,
+        runPoints: a.runPoints,
+        totalPoints: a.totalPoints,
+        award: a.award
+    }));
 
-Officer's Details:
-- Name: ${officerData.name}, Age: ${officerData.age}, Gender: ${officerData.gender}
-- Work Cycle: ${officerData.workCycle}. This is very important. For 'GRF Officer', their schedule is a 4-day cycle: Morning shift (8am-7:30pm), Night shift (7:30pm-8am), Off-day, Off-day. For 'Office Hours', they work Monday to Friday 9am-6pm. The training plan MUST be tailored to this work schedule realistically.
-- Medical Status: ${officerData.medicalStatus}
-- TARGET GOAL: Achieve IPPT ${officerData.targetGoal}
-
-Past IPPT Attempts:
-${officerData.attempts.map(att => `- Push-ups: ${att.pushups}, Sit-ups: ${att.situps}, 2.4km Run: ${att.runTime} (${att.result})`).join('\n')}
-
-Your response must be a detailed, encouraging, and actionable 4-week plan focused on bridging the gap from their current results to their ${officerData.targetGoal} target. Include:
-1. A brief, encouraging opening statement acknowledging their goal.
-2. An analysis of their weakest stations in the context of their goal.
-3. A week-by-week schedule (Week 1-4) with specific, progressively challenging exercises (sets, reps, distances) and 2-3 rest days per week, planned around their specific work cycle.
-4. Tips on proper form.
-5. If medical status indicates limitations (e.g., 'excused running'), suggest alternatives.
-6. Format using Markdown (headings, bold, bullets).`;
+    const verificationTag = 'REFERENCED_POINTS_JSON:';
+    let prompt = `You are a super motivating and friendly fitness buddy! 💪 Your goal is to create a simple and fun 4-week IPPT training plan for an officer. Use simple language and encouraging emoticons (like 👍, 🎉, 🔥).\n\nIMPORTANT: Use ONLY the numeric station points and totalPoints provided in the JSON below. Do NOT recalculate or modify these numbers. If you see inconsistencies, note them but do not change numbers.\n\nOfficer Details:\n- Name: ${officerData.name}, Age: ${officerData.age}, Gender: ${officerData.gender}\n- Work Cycle: ${officerData.workCycle} (tailor the plan accordingly).\n- Medical Status: ${officerData.medicalStatus}\n- TARGET GOAL: ${officerData.targetGoal}\n\nAUTHORITATIVE ATTEMPTS JSON (do NOT recalc):\n${JSON.stringify(attemptsSummary, null, 2)}\n\nYour response must be a detailed, encouraging, and actionable 4-week plan focused on bridging the gap from the provided totalPoints to the target award. Include:\n1) A brief encouraging opening.\n2) Analysis of weakest stations using only the provided points.\n3) A week-by-week schedule (Week 1-4) with specific exercises, progressive overload, and 2-3 rest days per week tailored to the work cycle.\n4) Tips on proper form and simple alternatives for medical limitations.\n5) Format as Markdown (headings, bold, bullets).\n\nFinally, append the following exact marker line and then the exact JSON you were given (no changes):\n${verificationTag}\n${JSON.stringify(attemptsSummary, null, 2)}`;
 
     const loadingMessages = [
         "Hold on... 🏃‍♂️",
@@ -230,13 +269,29 @@ Your response must be a detailed, encouraging, and actionable 4-week plan focuse
         "We're almost there, but not yet... 🤔",
         "Almost... ✨"
     ];
-
     const planText = await callGemini({ apiKey: DOM.apiKeyEl.value, prompt, outputEl: DOM.generationStatusEl, buttonEl: DOM.generatePlanBtn, loadingMessages });
 
     if (planText) {
         DOM.planOutputEl.innerHTML = simpleMarkdownToHtml(planText);
         DOM.outputSectionEl.classList.remove('hidden');
         DOM.generationStatusEl.innerHTML = '<span class="text-green-500 font-semibold">Your plan is ready! ✅</span>';
+
+        // verify the model appended the exact verification JSON
+        if (planText.includes(verificationTag)) {
+            const idx = planText.indexOf(verificationTag) + verificationTag.length;
+            const echoed = planText.slice(idx).trim();
+            try {
+                const parsed = JSON.parse(echoed);
+                const same = JSON.stringify(parsed) === JSON.stringify(attemptsSummary);
+                if (!same) {
+                    DOM.generationStatusEl.innerHTML += `<div class="mt-2 p-2 rounded bg-red-50 text-red-700">Warning: the AI's verification JSON does not match the authoritative scores. Please review the plan carefully.</div>`;
+                }
+            } catch (e) {
+                DOM.generationStatusEl.innerHTML += `<div class="mt-2 p-2 rounded bg-red-50 text-red-700">Warning: the AI did not append a valid verification JSON block. The generated plan may include hallucinated numbers.</div>`;
+            }
+        } else {
+            DOM.generationStatusEl.innerHTML += `<div class="mt-2 p-2 rounded bg-red-50 text-red-700">Warning: the AI did not append the required verification JSON. The generated plan may include hallucinated numbers.</div>`;
+        }
     }
 }
 
