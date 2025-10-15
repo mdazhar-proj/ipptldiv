@@ -1,3 +1,3 @@
-# ipptldiv.github.io
+# IPPT Gen
 Generating AI Plans for IPPT
 Developing
