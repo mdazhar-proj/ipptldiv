@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Test</title>
+</head>
+<body>
+    <h1>Testing ES6 Modules</h1>
+    <div id="test-results"></div>
+    
+    <script type="module">
+        import { calculateIpptResult, getAgeGroupIndex } from './js/ippt-scoring.js';
+        import { simpleMarkdownToHtml } from './js/utils.js';
+        
+        // Test IPPT scoring
+        const testResult = calculateIpptResult(30, 25, "12:30", 25, "male");
+        console.log('Test IPPT Result:', testResult);
+        
+        // Test age group calculation
+        const ageGroup = getAgeGroupIndex(25);
+        console.log('Age Group for 25:', ageGroup);
+        
+        // Test markdown conversion
+        const markdown = "## Test Heading\n**Bold text** and *italic text*";
+        const html = simpleMarkdownToHtml(markdown);
+        console.log('Markdown to HTML:', html);
+        
+        document.getElementById('test-results').innerHTML = `
+            <p>IPPT Test Result: ${testResult.award} (${testResult.totalPoints} points)</p>
+            <p>Age Group for 25: ${ageGroup + 1}</p>
+            <p>Markdown Test: ${html}</p>
+            <p style="color: green;">✅ All modules loaded successfully!</p>
+        `;
+    </script>
+</body>
+</html>
